@@ -7,5 +7,5 @@ export default async (req: Request, context: Context) => {
 };
 
 export const config: Config = {
-  path: "/travel-guide/:city/:country"
+  path: "/travel-guides/:city/:country"
 };
