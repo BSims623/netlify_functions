@@ -12,7 +12,8 @@
   "dependencies": {
     "@netlify/functions": "^3.0.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "stripe": "^17.7.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
