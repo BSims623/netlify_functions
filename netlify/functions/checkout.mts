@@ -29,7 +29,7 @@ export default async (req: Request, context: Context) => {
   return new Response(JSON.stringify({id: session.id}), {
     status: 303, 
     headers: {
-      "Access-Control-Allow-Origin": "*"
+      "Access-Control-Allow-Origin": process.env.ALLOW_ORIGIN as string
     }
   });
 };
