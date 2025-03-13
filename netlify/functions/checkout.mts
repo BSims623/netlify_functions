@@ -3,13 +3,10 @@ import { Config, Context } from "@netlify/functions";
 
 const stripe = new Stripe(process.env.STRIPE_SK as string);
 
-
 export default async (req: Request, context: Context) => {
-    const formData = await req.formData();
-    let formAmount = formData.get("amount");
-    let amount = 0;
-
-    if (formAmount) amount = Number(formAmount) * 100;
+  let { totalPrice } = await new Response(req.body).json();
+  
+  totalPrice = totalPrice * 100;
 
   const session = await stripe.checkout.sessions.create({
     line_items: [
@@ -19,21 +16,21 @@ export default async (req: Request, context: Context) => {
           product_data: {
             name: 'Window',
           },
-          unit_amount: amount,
+          unit_amount: totalPrice,
         },
         quantity: 1,
       },
     ],
     mode: 'payment',
-    success_url: 'https://stripefrontend101.netlify.app/',
-    cancel_url: 'https://stripefrontend101.netlify.app/',
+    success_url: process.env.SUCCESS_URL,
+    cancel_url: process.env.CANCEL_URL,
   });
 
-  return new Response(null, {
-    status: 303, // Redirect status code
+  return new Response(JSON.stringify({id: session.id}), {
+    status: 303, 
     headers: {
-      Location: session.url!, // Redirect to Stripe Checkout URL
-    },
+      "Access-Control-Allow-Origin": process.env.ALLOW_ORIGIN as string
+    }
   });
 };
 
