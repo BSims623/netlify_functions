@@ -25,8 +25,8 @@ export default async (req: Request, context: Context) => {
       },
     ],
     mode: 'payment',
-    success_url: 'http://localhost:4242/success',
-    cancel_url: 'http://localhost:4242/cancel',
+    success_url: 'https://stripefrontend101.netlify.app/',
+    cancel_url: 'https://stripefrontend101.netlify.app/',
   });
 
   return new Response(null, {
